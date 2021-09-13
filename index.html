@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My First Node App</title>
+    <title>EZOPS TEST</title>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
@@ -47,17 +47,34 @@
       var socket = io();
       $(() => {
         $("#send").click(() => {
-          sendMessage({ name: $("#name").val(), message: $("#message").val() });
+          const p = new Promise((resolve) => {
+            response = sendMessage({
+              name: $("#name").val(),
+              message: $("#message").val(),
+            });
+            resolve(response);
+          });
         });
 
         getMessages();
       });
-
       socket.on("message", addMessages);
 
       function addMessages(message) {
         $("#messages").append(
-          `<h4> ${message.name} </h4> <p> ${message.message} </p>`
+          `<div id="item_${message._id}">
+            <h4> ${message.name} </h4>
+            <p> ${message.message} </p>
+            <p>
+              <input
+                type="button"
+                value="Delete '${message.name}'"
+                class="btn btn-outline-danger"
+                onclick="deleteMessage('${message._id}')"
+              />
+            </p>
+            <br />
+          </div>`
         );
       }
 
@@ -69,6 +86,16 @@
 
       function sendMessage(message) {
         $.post("messages", message);
+      }
+
+      function deleteMessage(id) {
+        $.ajax({
+          url: "/messages",
+          type: "DELETE",
+          data: { id: id },
+        }).then((result) => {
+          if (result == "OK") $("#item_" + id).remove();
+        });
       }
     </script>
   </body>

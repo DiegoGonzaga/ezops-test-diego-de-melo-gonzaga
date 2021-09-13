@@ -4,6 +4,8 @@ var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 var mongoose = require("mongoose");
+require('dotenv').config()
+
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -11,7 +13,7 @@ var Message = mongoose.model("Message", {
   name: String,
   message: String,
 });
-var dbUrl = "mongodb://username:pass@ds257981.mlab.com:57981/simple-chat";
+var dbUrl = "mongodb+srv://" + process.env.MONGO_USER + ":" + process.env.MONGO_PASS + "@" + process.env.MONGO_DOMAIN + "/" + process.env.MONGO_DB;
 app.get("/messages", (req, res) => {
   Message.find({}, (err, messages) => {
     res.send(messages);

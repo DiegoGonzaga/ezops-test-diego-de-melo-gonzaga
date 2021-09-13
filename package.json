@@ -2,14 +2,16 @@
   "name": "ezops-test-diego-de-melo-gonzaga",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "dev": "nodemon -r dotenv/config server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "http": "^0.0.1-security",
     "mongoose": "^6.0.5",

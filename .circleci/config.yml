@@ -16,7 +16,7 @@ jobs:
     steps:
       - run: echo $SSH_KEY > key.pem
       - run: chmod 600 key.pem
-      - run: ssh -i key.pem ec2-user@$PUBLIC_IP -o StrictHostKeyChecking=no "cd ezops-test-diego-de-melo-gonzaga && sh ./scripts/deploy.sh && exit"
+      - run: ssh ec2-user@18.231.4.252 -o StrictHostKeyChecking=no "cd ezops-test-diego-de-melo-gonzaga && sh ./scripts/deploy.sh && exit"
       - run: rm key.pem
 workflows:
   build_and_test:

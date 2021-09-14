@@ -7,7 +7,7 @@ jobs:
 
     steps:
       - checkout
-      - run: sh ./scripts/create_env.sh
+      - run: echo "MONGO_USER=$MONGO_USER && MONGO_PASS=$MONGO_PASS && MONGO_DOMAIN=$MONGO_DOMAIN && MONGO_DB=$MONGO_DB"
       - run: npm install
       - run: npm test
 

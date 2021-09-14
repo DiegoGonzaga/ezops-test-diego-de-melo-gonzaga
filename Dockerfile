@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm install & npm install nodemon -g
+RUN npm install & npm install nodemon -g & npm install dotenv-safe
 
 EXPOSE 3000
 

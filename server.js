@@ -4,7 +4,7 @@ var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http);
 var mongoose = require("mongoose");
-require("dotenv").config();
+require("dotenv-safe").config();
 
 app.use(express.static(__dirname));
 app.use(bodyParser.json());
@@ -37,7 +37,7 @@ app.post("/messages", (req, res) => {
 });
 app.delete("/messages", (req, res) => {
   var id = req.body.id;
-  if (typeof id != String) return res.sendStatus(400);
+  if (typeof id != "string") return res.sendStatus(400);
   Message.deleteOne({ _id: id }).exec((err) => {
     res.sendStatus(200);
   });

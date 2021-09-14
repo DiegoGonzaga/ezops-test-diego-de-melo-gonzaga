@@ -7,6 +7,7 @@ jobs:
 
     steps:
       - checkout
+      - run: sh ./create_env.sh
       - run: npm install
       - run: npm test
 

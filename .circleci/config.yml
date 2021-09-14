@@ -19,10 +19,11 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh -i key.pem $SSH_USER@$SSH_HOST "cd cd ezops-test-diego-de-melo-gonzaga && sh ./scripts/deploy.sh"
+            ssh -i key.pem $SSH_USER@$SSH_HOST "cd ezops-test-diego-de-melo-gonzaga && sh ./scripts/deploy.sh"
       - run: rm key.pem
 workflows:
   build_and_test:
     jobs:
       - build
-      - deploy
+      - deploy:
+        requires: build

@@ -1,0 +1,17 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:16
+
+    steps:
+      - checkout
+      - run: sh ./create_env.sh
+      - run: npm install
+      - run: npm test
+
+workflows:
+  build_and_test:
+    jobs:
+      - build

@@ -7,11 +7,24 @@ jobs:
 
     steps:
       - checkout
-      - run: sh ./create_env.sh
+      - run: echo "MONGO_USER=$MONGO_USER && MONGO_PASS=$MONGO_PASS && MONGO_DOMAIN=$MONGO_DOMAIN && MONGO_DB=$MONGO_DB"
       - run: npm install
       - run: npm test
-
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - run: echo $SSH_KEY > key.pem
+      - run: chmod 600 key.pem
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh -i key.pem ec2-user@$PUBLIC_IP "cd ezops-test-diego-de-melo-gonzaga && sh ./scripts/deploy.sh && exit"
+      - run: rm key.pem
 workflows:
   build_and_test:
     jobs:
       - build
+      - deploy:
+          requires:
+            - build

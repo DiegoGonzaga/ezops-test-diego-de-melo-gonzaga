@@ -27,11 +27,6 @@ app.get("/messages", (req, res) => {
     res.send(messages);
   });
 });
-app.get("/messages", (req, res) => {
-  Message.find({}, (err, messages) => {
-    res.send(messages);
-  });
-});
 app.post("/messages", (req, res) => {
   var message = new Message(req.body);
   message.save((err) => {
@@ -42,6 +37,7 @@ app.post("/messages", (req, res) => {
 });
 app.delete("/messages", (req, res) => {
   var id = req.body.id;
+  if (typeof id != String) return res.sendStatus(400);
   Message.deleteOne({ _id: id }).exec((err) => {
     res.sendStatus(200);
   });
@@ -50,8 +46,7 @@ io.on("connection", () => {
   console.log("a user is connected");
 });
 mongoose.connect(dbUrl, (err) => {
-  console.log("mongodb connected", err);
+  // console.log("mongodb connected", err);
 });
-var server = http.listen(3000, () => {
-  console.log("server is running on port", server.address().port);
-});
+
+module.exports = http;
